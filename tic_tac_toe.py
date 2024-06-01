@@ -47,20 +47,16 @@ def computer_input(board):
             not_filled_space_arr.append(i)
     position = random.randint(0, (len(not_filled_space_arr)-1))
     position = not_filled_space_arr[position]
-    print(position)
     return position  # this should be a letter
 
 def test_win(board):
     wins = [["a", "b", "c"], ["a", "d", "g"], ["a", "e", "i"], ["b", "e", "h"], ["c", "f", "i"], ["c", "e", "g"], ["d", "e", "f"], ["g", "h", "i"]]
     for win in wins:
         if board[win[0]] == board[win[1]] == board[win[2]]:
-            print(f"Winner: {win[0]}, {win}")
+            print(f"Winner: {board[win[0]]}, {win}")
             return True
     return False
 
-
-def increment_plays(moves: int) -> int:
-    return moves + 1
 
 def tic_tac_toe():
     while not test_win(board=board):
@@ -68,7 +64,8 @@ def tic_tac_toe():
         print("You will be Xs")
         player_position = get_player_positional_input()
         board[player_position] = "X"
-        board[computer_input(board)] = "O"
+        if not test_win(board=board):  # if we don't test for the win here, O could win despite x going first
+            board[computer_input(board)] = "O"
 
 
 tic_tac_toe()
